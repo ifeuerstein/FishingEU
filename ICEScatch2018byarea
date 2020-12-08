@@ -1,0 +1,100 @@
+
+#Importing the file
+
+```{r}
+catchtoday <- read.csv("ICEScatch2018.csv", stringsAsFactors=FALSE)
+```
+
+#Information on the file
+
+List of values in the column Country
+
+```{r}
+unique(catchtoday$Country)
+```
+
+List of values in the column area
+
+```{r}
+unique(catchtoday$Area)
+```
+
+The list of values interesting for our research are the areas surrounding Great Britain. The list can be found here.
+https://mare.istc.cnr.it/fisheriesv2/area_en?code=27
+The interesting values are:
+Northern North Sea: 27.4.a
+Central North Sea: 27.4.b
+Southern North Sea: 27.4.c
+Northwest Coast of Scotland: 27.6.a
+Irish Sea: 27.7.a
+Eastern English Channel: 27.7.d
+Western English Channel: 27.7.e
+Bristol Channel: 27.7.f
+Celtic Sea North: 27.7.g
+Celtic Sea South: 27.7.h
+
+# Who is fishing what
+
+For which area, which countries are fishing the most in each area?
+```{r}
+install.packages("sqldf")
+library(sqldf)
+```
+
+Extract the data for each area and export them in a csv file
+
+```{r}
+sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.4.a"
+      GROUP BY Country')
+```
+
+Export the data for the area 27.4.a in a csv file.
+
+```{r}
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.4.a"
+      GROUP BY Country'), "Area274a.csv")
+```
+
+Export the data for the other areas.
+
+```{r}
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.4.b"
+      GROUP BY Country'), "Area274b.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.4.c"
+      GROUP BY Country'), "Area274c.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.6.a"
+      GROUP BY Country'), "Area276a.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.7.a"
+      GROUP BY Country'), "Area277a.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.7.d"
+      GROUP BY Country'), "Area277d.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.7.e"
+      GROUP BY Country'), "Area277e.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.7.f"
+      GROUP BY Country'), "Area277f.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.7.g"
+      GROUP BY Country'), "Area277g.csv")
+
+write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
+      WHERE Area = "27.7.h"
+      GROUP BY Country'), "Area277h.csv")
+```
+
+Join the files with a script called Combinefiles.sh 
