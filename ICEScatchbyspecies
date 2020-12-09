@@ -1,0 +1,103 @@
+#Install the packages
+
+```{r}
+install.packages("sqldf")
+library(sqldf)
+```
+#Importing the file
+
+```{r}
+catchtoday <- read.csv("ICEScatch2018.csv", sep=";", stringsAsFactors=FALSE)
+```
+
+#Information on the file
+
+List of values in the column species
+
+```{r}
+unique(catchtoday$Species)
+```
+There is a high number of species. We will concentrate only on the most important ones.
+
+The list of values interesting for our research are the areas surrounding Great Britain. The list can be found here.
+https://mare.istc.cnr.it/fisheriesv2/area_en?code=27
+The interesting values are:
+Northern North Sea: 27.4.a
+Central North Sea: 27.4.b
+Southern North Sea: 27.4.c
+Northwest Coast of Scotland: 27.6.a
+Irish Sea: 27.7.a
+Eastern English Channel: 27.7.d
+Western English Channel: 27.7.e
+Bristol Channel: 27.7.f
+Celtic Sea North: 27.7.g
+Celtic Sea South: 27.7.h
+
+#Which species are the most caught in each area
+
+```{r}
+sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.4.a"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC')
+```
+Export the data for the Area 27.4.a
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.4.a"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species274a.csv")
+```
+
+Export the data for the other areas.
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.4.b"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species274b.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.4.c"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species274c.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.6.a"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species276a.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.7.a"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species277a.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.7.d"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species277d.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.7.e"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species277e.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.7.f"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species277f.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.7.g"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species277g.csv")
+
+write.csv(sqldf('SELECT Area, Species, SUM(year2018) as Catch2018 FROM catchtoday
+      WHERE Area = "27.7.h"
+      GROUP BY Species
+      ORDER BY Catch2018 DESC'), "Species277h.csv")
+```
+
+
+Combine the data with a script. 
