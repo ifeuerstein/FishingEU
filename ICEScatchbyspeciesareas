@@ -1,0 +1,300 @@
+title: "Catchbyspeciesandareas"
+author: "Ingrid"
+date: "09/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Install the packages
+
+```{r}
+install.packages("sqldf")
+library(sqldf)
+```
+
+#Importing the file
+
+```{r}
+catchtoday <- read.csv("ICEScatch2018.csv", sep=";", stringsAsFactors=FALSE)
+```
+
+
+# For the most caught species, which are the most present countries
+
+## Area 27.4.a
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.4.a"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+The herring and the mackerel are particularly popular and Norway has a large chunk of it. GB also fishing a large part of atlantic herring.
+
+Export the data.
+
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.4.a"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies274a.csv")
+```
+
+
+##Area 27.4.b
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.4.b"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+Sandlances, Sptrats and Herrings are the most caught, and by Denmark. The British here are the number 1 in fishing Crabs.
+
+Export the data.
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.4.b"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies274b.csv")
+```
+
+
+##Area 27.4.c
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.4.c"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+The Dutch are fishing shrimps, plaice, and sole. The British are fishing Cockles and whelk.
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.4.c"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies274c.csv")
+```
+
+
+##Area 27.6.a
+
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.6.a"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+The blue whiting is the most fished specie, by Norway, the Netherlands, and Germany. The British are fishing maquerels, blue whiting and Norway Lobster.
+
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.6.a"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies276a.csv")
+```
+
+##Area 27.7.a
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.a"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+There is a strong domination of Britain here, with Ireland coming second. The British are fishing Herring, Blue whiting, Norway Lobster and Great Atlantic Scallop.
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.a"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies277a.csv")
+```
+
+
+##Area 27.7.d
+
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.d"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+In the Eastern English Channel, the French are fishing a lot of Great Atlantic Scallop, with the British coming as second. The herring is also much fished, with a domination of NL, Germany and France. France is the largest fisher of blue whiting, and Queen Scallop.
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.d"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies277d.csv")
+```
+
+
+##Area 27.7.e
+
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.e"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+In the Western English Channel, France is dominating most of the species: Algae, blue whiting, Scallops, pilchard, crabs, bittersweet.
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.e"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies277e.csv")
+```
+
+
+##Area 27.7.f
+
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.f"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+In the Bristol Channel, the British are dominating.
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.f"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies277f.csv")
+```
+
+
+##Area 27.7.g
+
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.g"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+In the Celtic North Sea, Ireland is dominating many species.
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.g"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies277g.csv")
+```
+
+
+##Area 27.7.h
+
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.h"
+      ORDER BY year2018 DESC
+      LIMIT 40')
+```
+
+In the Celtic South sea, the horse mackerel is the most fished specie, by the Netherlands. France is very present as well, while the British are fising Jack and Horse macquerels (JAX).
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE Area = "27.7.h"
+      ORDER BY year2018 DESC
+      LIMIT 40'), "areaspecies277h.csv")
+```
+
+
+# Where is the Cod?
+
+As the cod was freqently mentioned in the public debate, it can be interesting to see what are the balances in the Channel.
+
+## 27.7.d or Eastern English Channel
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE (Area = "27.7.d" AND Species = "COD")
+      ORDER BY year2018 DESC
+      LIMIT 10')
+```
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE (Area = "27.7.d" AND Species = "COD")
+      ORDER BY year2018 DESC
+      LIMIT 10'), "cod277d.csv")
+```
+
+# 27.7.e or Western English Channel
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE (Area = "27.7.e" AND Species = "COD")
+      ORDER BY year2018 DESC
+      LIMIT 10')
+```
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018, Country  FROM catchtoday
+      WHERE (Area = "27.7.e" AND Species = "COD")
+      ORDER BY year2018 DESC
+      LIMIT 10'), "cod277e.csv")
+```
+
+# Where are the biggest catches of Cod?
+
+```{r}
+sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018 FROM catchtoday
+      WHERE Species = "COD"
+      GROUP BY Area
+      ORDER BY year2018 DESC
+      LIMIT 30')
+```
+
+Export the data
+
+```{r}
+write.csv(sqldf('SELECT Area, Species, CAST(year2018 as int) as year2018 FROM catchtoday
+      WHERE Species = "COD"
+      GROUP BY Area
+      ORDER BY year2018 DESC
+      LIMIT 30'), "codallareas.csv")
+```
