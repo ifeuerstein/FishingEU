@@ -14,14 +14,6 @@ Importing the data.
 fishconso <- read.csv("Eumofa_consumption.csv", stringsAsFactors=FALSE, sep=";", header=T)
 ```
 
-Extracting the year 2020
-
-```{r}
-twentyfishconso <- subset(fishconso, fishconso$year == 2020)
-```
-
-## Finding the countries with the higher fish consumption
-
 Install the SQL package.
 
 ```{r}
@@ -29,10 +21,13 @@ install.packages("sqldf")
 library(sqldf)
 ```
 
+## Finding the countries with the higher fish consumption
+
+
 Order the countries by their consumption of fish.
 
 ```{r}
-sqldf('SELECT country, cast(sum(value_EUR) as int) as value_EUR FROM twentyfishconso
+sqldf('SELECT country, cast(avg(value_EUR) as int) as value_EUR FROM fishconso
 GROUP BY country
 ORDER BY value_EUR DESC')
 ```
@@ -40,36 +35,59 @@ ORDER BY value_EUR DESC')
 Extract the data
 
 ```{r}
-write.csv(sqldf('SELECT country, cast(sum(value_EUR) as int) as value_EUR FROM twentyfishconso
+write.csv(sqldf('SELECT country, cast(avg(value_EUR) as int) as value_EUR FROM fishconso
 GROUP BY country
 ORDER BY value_EUR DESC'), "Consumptionbycountry.csv")
 ```
 
+
 ## Comparing the nature of the consumption
+
+# Calculate the average consumtion 2013-2020 by species for the main countries
 
 Let's take the three biggest consumer of fish (Spain, Italy, France) and compare their consumption with the UK.
 
-# Create a dataframe for each country
+Create a subset for each country.
 
 ```{r}
-spainfishconso <- subset(twentyfishconso, twentyfishconso$country == "Espagne")
+Spainfishconso <- subset(fishconso, fishconso$country == "Espagne")
 
-francefishconso <- subset(twentyfishconso, twentyfishconso$country == "France")
+Francefishconso <- subset(fishconso, fishconso$country == "France")
 
-italyfishconso <- subset(twentyfishconso, twentyfishconso$country == "Italie")
+Italyfishconso <- subset(fishconso, fishconso$country == "Italie")
 
-UKfishconso <- subset(twentyfishconso, twentyfishconso$country == "Royaume-Uni")
+UKfishconso <- subset(fishconso, fishconso$country == "Royaume-Uni")
 ```
 
-#Extract the data
+Calculate an average by specie
 
 ```{r}
-write.csv(spainfishconso, "spainfishconso2020.csv")
+Spainaverage <- sqldf('SELECT country, specie, AVG(value_EUR) FROM Spainfishconso
+GROUP BY specie
+ORDER BY AVG(value_EUR) DESC')
 
-write.csv(francefishconso, "francefishconso2020.csv")
+Franceaverage <- sqldf('SELECT country, specie, AVG(value_EUR) FROM Francefishconso
+GROUP BY specie
+ORDER BY AVG(value_EUR) DESC')
 
-write.csv(italyfishconso, "italyfishconso2020.csv")
+Italyaverage <- sqldf('SELECT country, specie, AVG(value_EUR) FROM Italyfishconso
+GROUP BY specie
+ORDER BY AVG(value_EUR) DESC')
 
-write.csv(UKfishconso, "UKfishconso2020.csv")
+UKaverage <- sqldf('SELECT country, specie, AVG(value_EUR) FROM UKfishconso
+GROUP BY specie
+ORDER BY AVG(value_EUR) DESC')
+```
+
+# Combining the files
+
+```{r}
+maincountriesaverage <- rbind(Spainaverage, Franceaverage, Italyaverage, UKaverage)
+```
+
+#Extracting the files
+
+```{r}
+write.csv(maincountriesaverage, "consumptionmaincountries.csv")
 ```
 
