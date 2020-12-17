@@ -1,0 +1,75 @@
+---
+title: "EUConsumption"
+author: "Ingrid"
+date: "17/12/2020"
+output: html_document
+---
+
+
+## Importing the files
+
+Importing the data.
+
+```{r}
+fishconso <- read.csv("Eumofa_consumption.csv", stringsAsFactors=FALSE, sep=";", header=T)
+```
+
+Extracting the year 2020
+
+```{r}
+twentyfishconso <- subset(fishconso, fishconso$year == 2020)
+```
+
+## Finding the countries with the higher fish consumption
+
+Install the SQL package.
+
+```{r}
+install.packages("sqldf")
+library(sqldf)
+```
+
+Order the countries by their consumption of fish.
+
+```{r}
+sqldf('SELECT country, cast(sum(value_EUR) as int) as value_EUR FROM twentyfishconso
+GROUP BY country
+ORDER BY value_EUR DESC')
+```
+
+Extract the data
+
+```{r}
+write.csv(sqldf('SELECT country, cast(sum(value_EUR) as int) as value_EUR FROM twentyfishconso
+GROUP BY country
+ORDER BY value_EUR DESC'), "Consumptionbycountry.csv")
+```
+
+## Comparing the nature of the consumption
+
+Let's take the three biggest consumer of fish (Spain, Italy, France) and compare their consumption with the UK.
+
+# Create a dataframe for each country
+
+```{r}
+spainfishconso <- subset(twentyfishconso, twentyfishconso$country == "Espagne")
+
+francefishconso <- subset(twentyfishconso, twentyfishconso$country == "France")
+
+italyfishconso <- subset(twentyfishconso, twentyfishconso$country == "Italie")
+
+UKfishconso <- subset(twentyfishconso, twentyfishconso$country == "Royaume-Uni")
+```
+
+#Extract the data
+
+```{r}
+write.csv(spainfishconso, "spainfishconso2020.csv")
+
+write.csv(francefishconso, "francefishconso2020.csv")
+
+write.csv(italyfishconso, "italyfishconso2020.csv")
+
+write.csv(UKfishconso, "UKfishconso2020.csv")
+```
+
