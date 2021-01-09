@@ -1,3 +1,9 @@
+---
+title: "ICEScatch"
+author: "Ingrid"
+date: "08/12/2020"
+output: html_document
+---
 
 #Importing the file
 
@@ -32,6 +38,13 @@ Western English Channel: 27.7.e
 Bristol Channel: 27.7.f
 Celtic Sea North: 27.7.g
 Celtic Sea South: 27.7.h
+
+Sum of the total catch
+
+```{r}
+sum(catchtoday$X2018)
+```
+
 
 # Who is fishing what
 
@@ -97,4 +110,82 @@ write.csv(sqldf('SELECT SUM(X2018), Country, Area FROM catchtoday
       GROUP BY Country'), "Area277h.csv")
 ```
 
-Join the files with a script called Combinefiles.sh 
+Join the files with a script called Combinefiles.sh
+
+# Analysis by country
+
+In 1983, waters surrounding Britain were already majorly fished by by other countries. Where are the other countries fishing today? 
+
+## Britain
+
+```{r}
+sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "GB"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC')
+```
+
+Extract the data.
+
+```{r}
+write.csv(sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "GB"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC'), "2018UKbyarea.csv")
+```
+
+Compare with other main fishing countries.
+
+## France
+
+```{r}
+sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "FR"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC')
+```
+Extract the data.
+
+```{r}
+write.csv(sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "FR"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC'), "2018Francebyarea.csv")
+```
+
+## Spain
+
+```{r}
+sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "ES"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC')
+
+```
+
+Extract data.
+
+```{r}
+write.csv(sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "ES"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC'), "2018Spainbyarea.csv")
+```
+
+## Netherlands
+
+```{r}
+sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "NL"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC')
+```
+
+Extract data.
+
+```{r}
+write.csv(sqldf('SELECT Area, Country, SUM(X2018) FROM catchtoday
+      WHERE Country = "NL"
+      GROUP BY Area
+      ORDER BY SUM(X2018) DESC'), "2018NLbyarea.csv")
+```
